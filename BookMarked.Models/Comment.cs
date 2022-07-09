@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace BookMarked.Models
 {
-    public class Reviews
+    public class Comment
     {
+        public int CommentId { get; set; }
+        public int ReviewId { get; set; }
+        public string CommentContent { get; set; }
     }
 }
