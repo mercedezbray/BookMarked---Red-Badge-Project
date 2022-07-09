@@ -9,5 +9,9 @@ namespace BookMarked.Data
             : base(options)
         {
         }
+
+        public DbSet<Review> Reviews { get; set; }
+        public DbSet<Comment> Comments { get; set; }
+        public DbSet<Rating> Ratings { get; set; }
     }
 }
