@@ -1,4 +1,6 @@
 using BookMarked.Data;
+using BookMarked.Models.Interfaces;
+using BookMarked.Services;
 using Google.Apis.Books.v1;
 using Google.Apis.Services;
 using Microsoft.AspNetCore.Identity;
@@ -26,6 +28,7 @@ builder.Services.AddSingleton(options =>
         ApiKey = builder.Configuration["GoogleBooksAPIKey"],
         ApplicationName = "BookMarked"
     }));
+builder.Services.AddSingleton<IGoogleBooksApiClientService, GoogleBooksApiClientService>();
 
 var app = builder.Build();
 
