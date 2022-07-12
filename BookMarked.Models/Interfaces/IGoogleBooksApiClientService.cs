@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Google.Apis.Books.v1.Data;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +9,6 @@ namespace BookMarked.Models.Interfaces
 {
     public interface IGoogleBooksApiClientService
     {
-        public void Search();
+        public IList<Volume> Search(SearchTermModel searchTermModel);
     }
 }

@@ -1,7 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using BookMarked.Services;
-using Google.Apis.Books.v1;
+﻿using BookMarked.Models;
 using BookMarked.Models.Interfaces;
+using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 
 namespace BookMarked.WebMVC.Controllers
 {
@@ -15,15 +15,18 @@ namespace BookMarked.WebMVC.Controllers
             _logger = logger;
             _googleBooksApiClientService = googleBooksApiClientService;
         }
-        public IActionResult Index()
+        public IActionResult SearchPage()
         {
             return View();
         }
 
-        public IActionResult Search()
+        [HttpGet]
+        public IActionResult SearchWithTerms(SearchTermModel searchTermModel)
         {
-            _googleBooksApiClientService.Search();
-            return View();
+            var results = _googleBooksApiClientService.Search(searchTermModel);
+            //ViewData["results"] = JsonConvert.SerializeObject(results);
+            return View(results);
         }
     }
+    
 }

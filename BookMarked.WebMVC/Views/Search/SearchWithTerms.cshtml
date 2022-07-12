@@ -1,0 +1,15 @@
+﻿@model System.Collections.Generic.IList<Google.Apis.Books.v1.Data.Volume>
+
+    @foreach (var volume in Model)
+    {
+        <img src=@volume.VolumeInfo.ImageLinks.Thumbnail>
+        <p>@volume.Id</p>
+        <p>@volume.VolumeInfo.Title</p>
+        <p>@volume.VolumeInfo.Subtitle</p>
+        <p>@volume.VolumeInfo.Authors.FirstOrDefault()</p>
+        <p>@volume.VolumeInfo.PageCount</p>
+        <p>@volume.VolumeInfo.PublishedDate</p>
+        <p>@volume.VolumeInfo.MainCategory</p>
+        <hr />
+
+    }

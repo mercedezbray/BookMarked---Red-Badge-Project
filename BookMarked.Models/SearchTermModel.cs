@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace BookMarked.Models
 {
-    public class SearchResult
+    public class SearchTermModel
     {
-        
+        public string SearchTermInput { get; set; }
     }
 }

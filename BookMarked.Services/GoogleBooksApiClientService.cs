@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BookMarked.Models;
+using Google.Apis.Books.v1.Data;
 
 namespace BookMarked.Services
 {
@@ -17,11 +19,11 @@ namespace BookMarked.Services
             _booksService = (BooksService)serviceProvider.GetService(typeof(BooksService));
         }
 
-        public void Search()
+        public IList<Volume> Search(SearchTermModel searchTermModel)
         {
-            var searchResults = _booksService.Volumes.List("Percy Jackson");
-            searchResults.MaxResults = 1;
-            var listmodel = searchResults.Execute().Items;
+            var searchResults = _booksService.Volumes.List(searchTermModel.SearchTermInput);
+            searchResults.MaxResults = 10;
+            return searchResults.Execute().Items;
         }
     }
 }

@@ -1,3 +1,16 @@
-﻿@{
+﻿@using BookMarked.Models
+@using BookMarked.Services;
+
+@{
     ViewData["Title"] = "Search for a book!";
 }
+<h1>Enter the title of a book to search!</h1>
+
+@model SearchTermModel
+@using (Html.BeginForm("SearchWithTerms", "Search", FormMethod.Get))
+{
+   @Html.TextBoxFor(model => model.SearchTermInput) 
+   @Html.ValidationMessageFor(model => model.SearchTermInput)
+   <button type="submit">Search</button>
+}
+
