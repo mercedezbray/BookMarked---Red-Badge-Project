@@ -13,22 +13,22 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
-
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = false)
     .AddEntityFrameworkStores<ApplicationDbContext>();
-builder.Services.AddControllersWithViews();
 
-//builder.Services.AddScoped<INoteService, NoteService>();
-//builder.Services.AddScoped<ICategoryService, CategoryService>();
+builder.Services.AddControllersWithViews();
 
 builder.Services.AddSingleton(options =>
     new BooksService(new BaseClientService.Initializer { 
         ApiKey = builder.Configuration["GoogleBooksAPIKey"],
         ApplicationName = "BookMarked"
     }));
-builder.Services.AddSingleton<IGoogleBooksApiClientService, GoogleBooksApiClientService>();
+
+// Dependency Injection Items
+builder.Services.AddScoped<IGoogleBooksApiClientService, GoogleBooksApiClientService>();
+builder.Services.AddScoped<IRatingService, RatingService>();
 
 var app = builder.Build();
 

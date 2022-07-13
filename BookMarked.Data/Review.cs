@@ -12,6 +12,8 @@ namespace BookMarked.Data
         [Key]
         public int ReviewId { get; set; }
         [Required]
+        public string VolumeId { get; set; }
+        [Required]
         public int RatingId { get; set; }
         [Required]
         public string ReviewContent { get; set; }

@@ -20,11 +20,11 @@ namespace BookMarked.WebMVC.Controllers
             return View();
         }
 
+        // Takes the Search Terms and runs it tthrough the GoogleBooksApi
         [HttpGet]
         public IActionResult SearchWithTerms(SearchTermModel searchTermModel)
         {
             var results = _googleBooksApiClientService.Search(searchTermModel);
-            //ViewData["results"] = JsonConvert.SerializeObject(results);
             return View(results);
         }
     }

@@ -7,9 +7,10 @@ using System.Threading.Tasks;
 
 namespace BookMarked.Models
 {
-    public class Rating
+    public class RatingModel
     {
         public int RatingId { get; set; }
+        public string VolumeId { get; set; }
         public int ReviewId { get; set; }
         [Required(ErrorMessage ="Rating must be a whole number between 1-10")]
         [Range(1,10)]
