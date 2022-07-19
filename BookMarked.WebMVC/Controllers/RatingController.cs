@@ -1,4 +1,5 @@
 ﻿using BookMarked.Models.Interfaces;
+using BookMarked.Models.Rating;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 
@@ -28,12 +29,35 @@ namespace BookMarked.WebMVC.Controllers
             return true;
         }
 
+
         public IActionResult Index()
         {
             if (!SetUserIdInService()) return Unauthorized(); //Runs SetUserIdInService method and check validity
 
-           var ratings = _ratingService.GetRatings(); //variable 'ratings'  
-           return View(ratings.ToList());
+            var ratings = _ratingService.GetRatings(); //variable 'ratings'  
+            return View(ratings.ToList());
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Create(RatingCreate model)
+        {
+            if (!SetUserIdInService()) return Unauthorized();
+
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            if (_ratingService.CreateRating(model))
+            {
+                TempData["SaveResult"] = "Your rating was created.";
+                return RedirectToAction("Index");
+            };
+
+            ModelState.AddModelError("", "Rating could not be created.");
+
+            return View(model);
         }
     }
 }

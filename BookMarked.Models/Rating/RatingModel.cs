@@ -1,23 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BookMarked.Data
+namespace BookMarked.Models.Rating
 {
-    public class Rating
+    public class RatingModel
     {
-        [Key]
         public int RatingId { get; set; }
-        public Guid OwnerId { get; set; }
-        [Required]
         public string VolumeId { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Rating must be a whole number between 1-10")]
+        [Range(1, 10)]
         public int Stars { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Must enter a date in format MM/DD/YYYY")]
+        [Display(Name = "Date Read")]
         public DateTime DateRead { get; set; }
     }
 }

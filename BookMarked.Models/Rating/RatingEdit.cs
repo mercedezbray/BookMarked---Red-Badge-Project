@@ -1,23 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BookMarked.Data
+namespace BookMarked.Models.Rating
 {
-    public class Rating
+    public class RatingEdit
     {
-        [Key]
         public int RatingId { get; set; }
-        public Guid OwnerId { get; set; }
-        [Required]
         public string VolumeId { get; set; }
-        [Required]
         public int Stars { get; set; }
-        [Required]
+        [Display(Name = "Date Read")]
         public DateTime DateRead { get; set; }
     }
 }

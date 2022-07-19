@@ -2,15 +2,57 @@
 
     @foreach (var volume in Model)
     {
-        <img src=@volume.VolumeInfo.ImageLinks.Thumbnail>
+        string Author;
+        string BookCover;
+        string Title;
+        string PublishedDate;
+        int? PageCount;
+        string Subtitle;
+
+        if (volume.VolumeInfo.Authors is null)
+        {
+            Author = "No Author Found";
+        }
+        else Author = volume.VolumeInfo.Authors.First();
+
+        if (volume.VolumeInfo.ImageLinks is null)
+        {
+            BookCover = "No Image Found";
+        }
+        else BookCover = volume.VolumeInfo.ImageLinks.Thumbnail;
+
+        if (volume.VolumeInfo.Title is null)
+        {
+            Title = "No Title Found";
+        }
+        else Title = volume.VolumeInfo.Title;
+
+        if (volume.VolumeInfo.Subtitle is null)
+        {
+            Subtitle = "";
+        }
+        else Subtitle = volume.VolumeInfo.Subtitle;
+
+        if (volume.VolumeInfo.PageCount is null)
+        {
+            PageCount = 0;
+        }
+        else PageCount = volume.VolumeInfo.PageCount;
+
+        if (volume.VolumeInfo.PublishedDate is null)
+        {
+            PublishedDate = "No Publish Date Avaliable";
+        }
+        else PublishedDate = volume.VolumeInfo.PublishedDate;
+
+        <img src=@BookCover>
         <p>@volume.Id</p>
-        <p>@volume.VolumeInfo.Title</p>
-        <p>@volume.VolumeInfo.Subtitle</p>
-        <p>@volume.VolumeInfo.Authors.FirstOrDefault()</p>
-        <p>@volume.VolumeInfo.PageCount</p>
-        <p>@volume.VolumeInfo.PublishedDate</p>
-        <p>@volume.VolumeInfo.MainCategory</p>
-        <button type="button" class="btn btn-dark">Rate & Review This Book</button>
+        <p>Title: @Title</p>
+        <p>@Subtitle</p>
+        <p>Author: @Author</p>
+        <p>Page Numbers: @volume.VolumeInfo.PageCount</p>
+        <p>Published Date: @PublishedDate</p>
+        <button type="button" class="btn btn-dark" asp-controller="Ratings" asp-action="Create">Rate This Book</button>
         <button type="button" class="btn btn-dark">Add Book to TBR</button>
         <hr />
     }
