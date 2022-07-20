@@ -42,6 +42,8 @@ namespace BookMarked.Data.Migrations
 
                     b.HasKey("CommentId");
 
+                    b.HasIndex("ReviewId");
+
                     b.ToTable("Comments");
                 });
 
@@ -94,6 +96,8 @@ namespace BookMarked.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ReviewId");
+
+                    b.HasIndex("RatingId");
 
                     b.ToTable("Reviews");
                 });
@@ -300,6 +304,28 @@ namespace BookMarked.Data.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("BookMarked.Data.Comment", b =>
+                {
+                    b.HasOne("BookMarked.Data.Review", "Review")
+                        .WithMany("Comments")
+                        .HasForeignKey("ReviewId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Review");
+                });
+
+            modelBuilder.Entity("BookMarked.Data.Review", b =>
+                {
+                    b.HasOne("BookMarked.Data.Rating", "Rating")
+                        .WithMany()
+                        .HasForeignKey("RatingId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Rating");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -349,6 +375,11 @@ namespace BookMarked.Data.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("BookMarked.Data.Review", b =>
+                {
+                    b.Navigation("Comments");
                 });
 #pragma warning restore 612, 618
         }

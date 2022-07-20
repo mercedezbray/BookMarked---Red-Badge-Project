@@ -14,8 +14,8 @@ namespace BookMarked.Data
         public int CommentId { get; set; }
         public Guid OwnerId { get; set; }
 
-        [ForeignKey(nameof(Review))]
-        public int ReviewId { get; set; }
+        public Review Review { get; set; }
+
         [Required]
         public string CommentContent { get; set; }
     }

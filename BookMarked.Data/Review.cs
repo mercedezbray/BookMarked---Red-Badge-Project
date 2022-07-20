@@ -12,12 +12,18 @@ namespace BookMarked.Data
     {
         [Key]
         public int ReviewId { get; set; }
+
         public Guid OwnerId { get; set; }
+
         [Required]
         public string VolumeId { get; set; }
-        [ForeignKey(nameof(Rating))]
+
         public int RatingId { get; set; }
+        public Rating Rating { get; set; }
+
         [Required]
         public string ReviewContent { get; set; }
+
+        public List<Comment> Comments { get; set; }
     }
 }
