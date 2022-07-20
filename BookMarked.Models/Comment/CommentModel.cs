@@ -5,15 +5,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BookMarked.Models
+namespace BookMarked.Models.Comment
 {
-    public class Comment
+    public class CommentModel
     {
         public int CommentId { get; set; }
         public int ReviewId { get; set; }
-        [Required(ErrorMessage ="Must enter text for comment")]
+        [Required(ErrorMessage = "Must enter text for comment")]
         [StringLength(500)]
-        [Display(Name="Comment")]
+        [Display(Name = "Comment")]
         public string CommentContent { get; set; }
     }
 }
