@@ -50,7 +50,7 @@ namespace BookMarked.Services
         public RatingDetail GetRatingById(int Ratingid)
         {
             var rating = _context.Ratings
-                .Single(e => e.RatingId == id && e.OwnerId == _userId);
+                .Single(e => e.RatingId == Ratingid && e.OwnerId == _userId);
             return new RatingDetail()
             {
                 RatingId = rating.RatingId,

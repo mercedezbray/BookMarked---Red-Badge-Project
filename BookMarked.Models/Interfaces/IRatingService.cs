@@ -10,7 +10,7 @@ namespace BookMarked.Models.Interfaces
     public interface IRatingService
     {
         bool CreateRating(RatingCreate model);
-        IList<RatingModel> GetRatings();
+        IList<RatingListItem> GetRatings();
         void SetUserId (Guid userId);
         public RatingDetail GetRatingById(int Ratingid);
         bool UpdateRating(RatingEdit model);

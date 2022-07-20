@@ -16,3 +16,4 @@ namespace BookMarked.Models.Rating
         public DateTime DateRead { get; set; }
 
     }
+}

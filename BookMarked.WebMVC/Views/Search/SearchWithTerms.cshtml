@@ -52,7 +52,10 @@
         <p>Author: @Author</p>
         <p>Page Numbers: @volume.VolumeInfo.PageCount</p>
         <p>Published Date: @PublishedDate</p>
-        <button type="button" class="btn btn-dark" asp-controller="Ratings" asp-action="Create">Rate This Book</button>
-        <button type="button" class="btn btn-dark">Add Book to TBR</button>
+
+        <div class="form-group">  
+            <button type="button" class="btn btn-dark"> @Html.ActionLink("Create", "Ratings", new { VolumeId = volume.Id }) </button>
+        </div>  
+
         <hr />
     }
