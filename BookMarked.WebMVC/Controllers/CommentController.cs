@@ -1,17 +1,17 @@
-﻿using BookMarked.Models.Interfaces;
-using BookMarked.Models.Review;
+﻿using BookMarked.Models.Comment;
+using BookMarked.Models.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 
 namespace BookMarked.WebMVC.Controllers
 {
-    public class ReviewController : Controller
+    public class CommentController : Controller
     {
-        private readonly IReviewService _reviewService;
+        private readonly ICommentService _commentService;
 
-        public ReviewController(IReviewService reviewService)
+        public CommentController(ICommentService commentService)
         {
-            _reviewService = reviewService;
+            _commentService = commentService;
         }
 
         private Guid GetUserId()
@@ -25,7 +25,7 @@ namespace BookMarked.WebMVC.Controllers
         {
             var userId = GetUserId(); // Calls up to get the userId 
             if (userId == null) return false; //Make sure the userId is not null
-            _reviewService.SetUserId(userId); //Calls service and sets the userId
+            _commentService.SetUserId(userId); //Calls service and sets the userId
             return true;
         }
 
@@ -34,8 +34,8 @@ namespace BookMarked.WebMVC.Controllers
         {
             if (!SetUserIdInService()) return Unauthorized(); //Runs SetUserIdInService method and check validity
 
-            var reviews = _reviewService.GetReviews(); //variable 'ratings'  
-            return View(reviews.ToList());
+            var comments = _commentService.GetComments(); //variable 'ratings'  
+            return View(comments.ToList());
         }
 
         [HttpGet]
@@ -47,7 +47,7 @@ namespace BookMarked.WebMVC.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(ReviewCreate model)
+        public ActionResult Create(CommentCreate model)
         {
             if (!SetUserIdInService()) return Unauthorized();
 
@@ -56,13 +56,13 @@ namespace BookMarked.WebMVC.Controllers
                 return View(model);
             }
 
-            if (_reviewService.CreateReview(model))
+            if (_commentService.CreateComment(model))
             {
-                TempData["SaveResult"] = "Your review was created.";
+                TempData["SaveResult"] = "Your comment was created.";
                 return RedirectToAction("Index");
             };
 
-            ModelState.AddModelError("", "Review could not be created.");
+            ModelState.AddModelError("", "Comment could not be created.");
 
             return View(model);
         }
@@ -71,7 +71,7 @@ namespace BookMarked.WebMVC.Controllers
         {
             if (!SetUserIdInService()) return Unauthorized();
 
-            var model = _reviewService.GetReviewById(id);
+            var model = _commentService.GetCommentById(id);
 
             return View(model);
         }
@@ -80,17 +80,17 @@ namespace BookMarked.WebMVC.Controllers
         {
             if (!SetUserIdInService()) return Unauthorized();
 
-            var detail = _reviewService.GetReviewById(id);
-            var model = new ReviewEdit()
+            var detail = _commentService.GetCommentById(id);
+            var model = new CommentEdit()
             {
-                ReviewContent = detail.ReviewContent
+                CommentContent = detail.CommentContent
             };
             return View(model);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, ReviewEdit model)
+        public ActionResult Edit(int id, CommentEdit model)
         {
             if (!ModelState.IsValid) return View(model);
 
@@ -101,13 +101,13 @@ namespace BookMarked.WebMVC.Controllers
             }
 
             if (!SetUserIdInService()) return Unauthorized();
-            if (_reviewService.UpdateReview(model))
+            if (_commentService.UpdateComment(model))
             {
-                TempData["SaveResult"] = "Your Review was updated.";
+                TempData["SaveResult"] = "Your Comment was updated.";
                 return RedirectToAction(nameof(Index));
             }
 
-            ModelState.AddModelError("", "Your Review could not be updated.");
+            ModelState.AddModelError("", "Your Comment could not be updated.");
             return View(model);
         }
 
@@ -116,7 +116,7 @@ namespace BookMarked.WebMVC.Controllers
         {
             if (!SetUserIdInService()) return Unauthorized();
 
-            var model = _reviewService.GetReviewById(id);
+            var model = _commentService.GetCommentById(id);
 
             return View(model);
         }
@@ -127,8 +127,8 @@ namespace BookMarked.WebMVC.Controllers
         public ActionResult DeletePost(int id)
         {
             if (!SetUserIdInService()) return Unauthorized();
-            _reviewService.DeleteReview(id);
-            TempData["SaveResult"] = "Your Review was deleted!";
+            _commentService.DeleteComment(id);
+            TempData["SaveResult"] = "Your Comment was deleted!";
             return RedirectToAction(nameof(Index));
         }
     }

@@ -10,13 +10,18 @@ namespace BookMarked.Models.Review
     public class ReviewListItem
     {
         [Key]
-        public int RatingId { get; set; }
+        public int ReviewId { get; set; }
+        [Required]
         public Guid OwnerId { get; set; }
+
         [Required]
         public string VolumeId { get; set; }
         [Required]
-        public int Stars { get; set; }
-        [Required]
-        public DateTime DateRead { get; set; }
+        public int RatingId { get; set; }
+        [Required(ErrorMessage = "Must enter text for a review")]
+        [Display(Name = "Review")]
+        [StringLength(1000)]
+        public string ReviewContent { get; set; }
+
     }
 }

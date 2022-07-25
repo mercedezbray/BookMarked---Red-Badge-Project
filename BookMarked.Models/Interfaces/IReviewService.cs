@@ -11,6 +11,7 @@ namespace BookMarked.Models.Interfaces
     {
         bool CreateReview(ReviewCreate model);
         IList<ReviewListItem> GetReviews();
+        void SetUserId(Guid userId);
         ReviewDetail GetReviewById(int Reviewid);
         bool UpdateReview(ReviewEdit model);
         bool DeleteReview(int reviewId);

@@ -29,6 +29,8 @@ builder.Services.AddSingleton(options =>
 // Dependency Injection Items
 builder.Services.AddScoped<IGoogleBooksApiClientService, GoogleBooksApiClientService>();
 builder.Services.AddScoped<IRatingService, RatingService>();
+builder.Services.AddScoped<IReviewService, ReviewService>();
+builder.Services.AddScoped<ICommentService, CommentService>();
 
 var app = builder.Build();
 

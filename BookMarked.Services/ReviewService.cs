@@ -23,9 +23,11 @@ namespace BookMarked.Services
             {
                 var entity = new Review
                 {
-
+                    OwnerId = _userId,
+                    VolumeId = model.VolumeId,
+                    ReviewContent = model.ReviewContent,
                 };
-                _context.Review.Add(entity);
+                _context.Reviews.Add(entity);
                 return _context.SaveChanges() == 1;
             }
 
@@ -36,7 +38,11 @@ namespace BookMarked.Services
                 .Select(e =>
                     new ReviewListItem()
                     {
-
+                        ReviewId = e.ReviewId,
+                        OwnerId = _userId,
+                        VolumeId=e.VolumeId,
+                        RatingId = e.RatingId,
+                        ReviewContent=e.ReviewContent,
                     }).ToList();
                 return reviews;
             }
@@ -47,8 +53,11 @@ namespace BookMarked.Services
                     .Single(e => e.RatingId == Reviewid && e.OwnerId == _userId);
                 return new ReviewDetail()
                 {
-
-
+                    RatingId = rating.RatingId,
+                    OwnerId= _userId,
+                    ReviewContent = rating.ReviewContent,
+                    VolumeId = rating.VolumeId,
+                    ReviewId = rating.ReviewId,
                 };
             }
 

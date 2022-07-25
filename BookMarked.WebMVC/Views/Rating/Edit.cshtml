@@ -1,19 +1,28 @@
-﻿@model BookMarked.Models.Rating.RatingCreate
-@using BookMarked.Services;
+﻿@model BookMarked.Models.Rating.RatingEdit
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Create a New Rating for @ViewData["VolumeId"]</h1>
+<h1>Edit</h1>
 
-<h4>RatingCreate</h4>
+<h4>RatingEdit</h4>
 <hr />
-
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Create">
+        <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="RatingId" class="control-label"></label>
+                <input asp-for="RatingId" class="form-control" />
+                <span asp-validation-for="RatingId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="VolumeId" class="control-label"></label>
+                <input asp-for="VolumeId" class="form-control" />
+                <span asp-validation-for="VolumeId" class="text-danger"></span>
+            </div>
             <div class="form-group">
                 <label asp-for="Stars" class="control-label"></label>
                 <input asp-for="Stars" class="form-control" />
@@ -25,7 +34,7 @@
                 <span asp-validation-for="DateRead" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Save" class="btn btn-primary" />
             </div>
         </form>
     </div>
@@ -34,3 +43,4 @@
 <div>
     <a asp-action="Index">Back to List</a>
 </div>
+

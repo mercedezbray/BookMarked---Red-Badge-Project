@@ -1,20 +1,28 @@
-﻿@model BookMarked.Models.Rating.RatingEdit
+﻿@model BookMarked.Models.Rating.RatingCreate
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Edit</h1>
+<h1>Create</h1>
 
-<h4>NoteEdit</h4>
+<h4>RatingCreate</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Edit">
+        <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-            @Html.HiddenFor(model => model.RatingId)
-
+            <div class="form-group">
+                <label asp-for="OwnerId" class="control-label"></label>
+                <input asp-for="OwnerId" class="form-control" />
+                <span asp-validation-for="OwnerId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="VolumeId" class="control-label"></label>
+                <input asp-for="VolumeId" class="form-control" />
+                <span asp-validation-for="VolumeId" class="text-danger"></span>
+            </div>
             <div class="form-group">
                 <label asp-for="Stars" class="control-label"></label>
                 <input asp-for="Stars" class="form-control" />
@@ -26,7 +34,7 @@
                 <span asp-validation-for="DateRead" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <input type="submit" value="Create" class="btn btn-primary" />
             </div>
         </form>
     </div>
@@ -36,6 +44,3 @@
     <a asp-action="Index">Back to List</a>
 </div>
 
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
