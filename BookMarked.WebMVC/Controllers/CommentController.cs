@@ -14,34 +14,21 @@ namespace BookMarked.WebMVC.Controllers
             _commentService = commentService;
         }
 
-        private Guid GetUserId()
-        {
-            var userIdClaim = User.Claims.First(i => i.Type == ClaimTypes.NameIdentifier).Value; //returns a string
-            if (userIdClaim == null) return default; //make sure string is not null
-            return Guid.Parse(userIdClaim); //parsing string into a guid
-        }
-
-        private bool SetUserIdInService()
-        {
-            var userId = GetUserId(); // Calls up to get the userId 
-            if (userId == null) return false; //Make sure the userId is not null
-            _commentService.SetUserId(userId); //Calls service and sets the userId
-            return true;
-        }
-
 
         public IActionResult Index()
         {
-            if (!SetUserIdInService()) return Unauthorized(); //Runs SetUserIdInService method and check validity
+            if (!User.Identity.IsAuthenticated) return Unauthorized(); //Runs SetUserIdInService method and check validity
 
             var comments = _commentService.GetComments(); //variable 'ratings'  
             return View(comments.ToList());
         }
 
         [HttpGet]
-        public ActionResult Create(string VolumeId)
+        public IActionResult Create([FromQuery] string volumeId)
         {
-            ViewData["VolumeId"] = VolumeId;
+            ViewData["OwnerRef"] = UserUtility.GetUserId(User);
+            ViewData["VolumeRef"] = volumeId;
+
             return View();
         }
 
@@ -49,7 +36,7 @@ namespace BookMarked.WebMVC.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(CommentCreate model)
         {
-            if (!SetUserIdInService()) return Unauthorized();
+            if (!User.Identity.IsAuthenticated) return Unauthorized();
 
             if (!ModelState.IsValid)
             {
@@ -69,7 +56,7 @@ namespace BookMarked.WebMVC.Controllers
 
         public ActionResult Details(int id)
         {
-            if (!SetUserIdInService()) return Unauthorized();
+            if (!User.Identity.IsAuthenticated) return Unauthorized();
 
             var model = _commentService.GetCommentById(id);
 
@@ -78,7 +65,7 @@ namespace BookMarked.WebMVC.Controllers
 
         public ActionResult Edit(int id)
         {
-            if (!SetUserIdInService()) return Unauthorized();
+            if (!User.Identity.IsAuthenticated) return Unauthorized();
 
             var detail = _commentService.GetCommentById(id);
             var model = new CommentEdit()
@@ -100,7 +87,7 @@ namespace BookMarked.WebMVC.Controllers
                 return View(model);
             }
 
-            if (!SetUserIdInService()) return Unauthorized();
+            if (!User.Identity.IsAuthenticated) return Unauthorized();
             if (_commentService.UpdateComment(model))
             {
                 TempData["SaveResult"] = "Your Comment was updated.";
@@ -114,7 +101,7 @@ namespace BookMarked.WebMVC.Controllers
         [ActionName("Delete")]
         public ActionResult Delete(int id)
         {
-            if (!SetUserIdInService()) return Unauthorized();
+            if (!User.Identity.IsAuthenticated) return Unauthorized();
 
             var model = _commentService.GetCommentById(id);
 
@@ -126,7 +113,7 @@ namespace BookMarked.WebMVC.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeletePost(int id)
         {
-            if (!SetUserIdInService()) return Unauthorized();
+            if (!User.Identity.IsAuthenticated) return Unauthorized();
             _commentService.DeleteComment(id);
             TempData["SaveResult"] = "Your Comment was deleted!";
             return RedirectToAction(nameof(Index));

@@ -14,42 +14,30 @@ namespace BookMarked.WebMVC.Controllers
             _ratingService = ratingService;
         }
 
-        private Guid GetUserId()
+        [HttpGet]
+        public IActionResult Create([FromQuery] string volumeId)
         {
-            var userIdClaim = User.Claims.First(i => i.Type == ClaimTypes.NameIdentifier).Value; //returns a string
-            if (userIdClaim == null) return default; //make sure string is not null
-            return Guid.Parse(userIdClaim); //parsing string into a guid
-        }
+            ViewData["OwnerRef"] = UserUtility.GetUserId(User);
+            ViewData["VolumeRef"] = volumeId;
 
-        private bool SetUserIdInService()
-        {
-            var userId = GetUserId(); // Calls up to get the userId 
-            if (userId == null) return false; //Make sure the userId is not null
-            _ratingService.SetUserId(userId); //Calls service and sets the userId
-            return true;
+            return View();
         }
 
 
         public IActionResult Index()
         {
-            if (!SetUserIdInService()) return Unauthorized(); //Runs SetUserIdInService method and check validity
+            if (!User.Identity.IsAuthenticated) return Unauthorized();
 
-            var ratings = _ratingService.GetRatings(); //variable 'ratings'  
+            var ratings = _ratingService.GetRatings(UserUtility.GetUserId(User)); //variable 'ratings'  
             return View(ratings.ToList());
         }
 
-        [HttpGet]
-        public ActionResult Create(string VolumeId)
-        {
-            ViewData["VolumeId"] = VolumeId;
-            return View();
-        }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(RatingCreate model)
         {
-            if (!SetUserIdInService()) return Unauthorized();
+            if (!User.Identity.IsAuthenticated) return Unauthorized();
 
             if (!ModelState.IsValid)
             {
@@ -69,7 +57,7 @@ namespace BookMarked.WebMVC.Controllers
 
         public ActionResult Details(int id)
         {
-            if (!SetUserIdInService()) return Unauthorized();
+            if (!User.Identity.IsAuthenticated) return Unauthorized();
 
             var model = _ratingService.GetRatingById(id);
 
@@ -78,7 +66,7 @@ namespace BookMarked.WebMVC.Controllers
 
         public ActionResult Edit(int id)
         {
-            if (!SetUserIdInService()) return Unauthorized();
+            if (!User.Identity.IsAuthenticated) return Unauthorized();
 
             var detail = _ratingService.GetRatingById(id);
             var model = new RatingEdit()
@@ -102,7 +90,7 @@ namespace BookMarked.WebMVC.Controllers
                 return View(model);
             }
 
-            if (!SetUserIdInService()) return Unauthorized();
+            if (!User.Identity.IsAuthenticated) return Unauthorized();
             if (_ratingService.UpdateRating(model))
             {
                 TempData["SaveResult"] = "Your Rating was updated.";
@@ -116,7 +104,7 @@ namespace BookMarked.WebMVC.Controllers
         [ActionName("Delete")]
         public ActionResult Delete(int id)
         {
-            if (!SetUserIdInService()) return Unauthorized();
+            if (!User.Identity.IsAuthenticated) return Unauthorized();
 
             var model = _ratingService.GetRatingById(id);
 
@@ -128,7 +116,7 @@ namespace BookMarked.WebMVC.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeletePost(int id)
         {
-            if (!SetUserIdInService()) return Unauthorized();
+            if (!User.Identity.IsAuthenticated) return Unauthorized();
             _ratingService.DeleteRating(id);
             TempData["SaveResult"] = "Your Rating was deleted!";
             return RedirectToAction(nameof(Index));

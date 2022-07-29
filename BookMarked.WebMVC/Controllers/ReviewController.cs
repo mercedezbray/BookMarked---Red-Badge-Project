@@ -14,42 +14,28 @@ namespace BookMarked.WebMVC.Controllers
             _reviewService = reviewService;
         }
 
-        private Guid GetUserId()
+        [HttpGet]
+        public IActionResult Create([FromQuery] string volumeId)
         {
-            var userIdClaim = User.Claims.First(i => i.Type == ClaimTypes.NameIdentifier).Value; //returns a string
-            if (userIdClaim == null) return default; //make sure string is not null
-            return Guid.Parse(userIdClaim); //parsing string into a guid
-        }
+            ViewData["OwnerRef"] = UserUtility.GetUserId(User);
+            ViewData["VolumeRef"] = volumeId;
 
-        private bool SetUserIdInService()
-        {
-            var userId = GetUserId(); // Calls up to get the userId 
-            if (userId == null) return false; //Make sure the userId is not null
-            _reviewService.SetUserId(userId); //Calls service and sets the userId
-            return true;
+            return View();
         }
-
 
         public IActionResult Index()
         {
-            if (!SetUserIdInService()) return Unauthorized(); //Runs SetUserIdInService method and check validity
+            if (!User.Identity.IsAuthenticated) return Unauthorized(); //Runs SetUserIdInService method and check validity
 
             var reviews = _reviewService.GetReviews(); //variable 'ratings'  
             return View(reviews.ToList());
-        }
-
-        [HttpGet]
-        public ActionResult Create(string VolumeId)
-        {
-            ViewData["VolumeId"] = VolumeId;
-            return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(ReviewCreate model)
         {
-            if (!SetUserIdInService()) return Unauthorized();
+            if (!User.Identity.IsAuthenticated) return Unauthorized();
 
             if (!ModelState.IsValid)
             {
@@ -69,7 +55,7 @@ namespace BookMarked.WebMVC.Controllers
 
         public ActionResult Details(int id)
         {
-            if (!SetUserIdInService()) return Unauthorized();
+            if (!User.Identity.IsAuthenticated) return Unauthorized();
 
             var model = _reviewService.GetReviewById(id);
 
@@ -78,7 +64,7 @@ namespace BookMarked.WebMVC.Controllers
 
         public ActionResult Edit(int id)
         {
-            if (!SetUserIdInService()) return Unauthorized();
+            if (!User.Identity.IsAuthenticated) return Unauthorized();
 
             var detail = _reviewService.GetReviewById(id);
             var model = new ReviewEdit()
@@ -100,7 +86,7 @@ namespace BookMarked.WebMVC.Controllers
                 return View(model);
             }
 
-            if (!SetUserIdInService()) return Unauthorized();
+            if (!User.Identity.IsAuthenticated) return Unauthorized();
             if (_reviewService.UpdateReview(model))
             {
                 TempData["SaveResult"] = "Your Review was updated.";
@@ -114,7 +100,7 @@ namespace BookMarked.WebMVC.Controllers
         [ActionName("Delete")]
         public ActionResult Delete(int id)
         {
-            if (!SetUserIdInService()) return Unauthorized();
+            if (!User.Identity.IsAuthenticated) return Unauthorized();
 
             var model = _reviewService.GetReviewById(id);
 
@@ -126,7 +112,7 @@ namespace BookMarked.WebMVC.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeletePost(int id)
         {
-            if (!SetUserIdInService()) return Unauthorized();
+            if (!User.Identity.IsAuthenticated) return Unauthorized();
             _reviewService.DeleteReview(id);
             TempData["SaveResult"] = "Your Review was deleted!";
             return RedirectToAction(nameof(Index));

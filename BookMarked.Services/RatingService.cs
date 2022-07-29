@@ -23,19 +23,20 @@ namespace BookMarked.Services
         {
             var entity = new Rating
                 {
-                    OwnerId = _userId,
+                    OwnerId = model.OwnerId,
                     VolumeId = model.VolumeId,
                     Stars = model.Stars,
                     DateRead = model.DateRead,
                 };
             _context.Ratings.Add(entity);
-            return _context.SaveChanges() == 1;
+            var result = _context.SaveChanges();
+            return result == 1;
         }
 
-        public IList<RatingListItem> GetRatings()
+        public IList<RatingListItem> GetRatings( Guid OwnerId)
         {
             var ratings = _context.Ratings
-            .Where(e => e.OwnerId == _userId)
+            .Where(e => e.OwnerId == OwnerId)
             .Select(e =>
                 new RatingListItem()
                 {
@@ -50,7 +51,7 @@ namespace BookMarked.Services
         public RatingDetail GetRatingById(int Ratingid)
         {
             var rating = _context.Ratings
-                .Single(e => e.RatingId == Ratingid && e.OwnerId == _userId);
+                .Single(e => e.RatingId == Ratingid);
             return new RatingDetail()
             {
                 RatingId = rating.RatingId,
@@ -64,7 +65,7 @@ namespace BookMarked.Services
         public bool UpdateRating(RatingEdit model)
         {
             var rating = _context.Ratings
-                .Single(e => e.RatingId == model.RatingId && e.OwnerId == _userId);
+                .Single(e => e.RatingId == model.RatingId);
             rating.DateRead = model.DateRead;
             rating.Stars = model.Stars;
 
@@ -74,14 +75,14 @@ namespace BookMarked.Services
         public bool DeleteRating(int ratingId)
         {
             var entity = _context.Ratings
-                .SingleOrDefault(e => e.RatingId == ratingId && e.OwnerId == _userId);
+                .SingleOrDefault(e => e.RatingId == ratingId);
 
             _context.Ratings.Remove(entity);
 
             return _context.SaveChanges() == 1;
         }
 
-        public void SetUserId(Guid userId) => _userId = userId;
+   
 
 
     }

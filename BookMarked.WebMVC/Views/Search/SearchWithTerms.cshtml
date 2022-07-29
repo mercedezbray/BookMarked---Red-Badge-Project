@@ -46,16 +46,17 @@
         else PublishedDate = volume.VolumeInfo.PublishedDate;
 
         <img src=@BookCover>
-        <p>@volume.Id</p>
+        <p>Volume Id: @volume.Id</p>
         <p>Title: @Title</p>
         <p>@Subtitle</p>
         <p>Author: @Author</p>
         <p>Page Numbers: @volume.VolumeInfo.PageCount</p>
         <p>Published Date: @PublishedDate</p>
 
-        <div class="form-group">  
-            <button type="button" class="btn btn-dark"> @Html.ActionLink("Create", "Ratings", new { VolumeId = volume.Id }) </button>
-        </div>  
+        <form method="get" asp-controller="Rating" asp-action="Create">
+                <button class="btn-dark">Rate this book!</button>
+                <input type="hidden" name="volumeId" value=@volume.Id/>
+        </form>
 
         <hr />
     }
