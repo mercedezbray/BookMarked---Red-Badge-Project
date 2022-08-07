@@ -25,6 +25,7 @@ namespace BookMarked.Services
                 {
                     OwnerId = model.OwnerId,
                     VolumeId = model.VolumeId,
+                    VolumeTitle = model.VolumeTitle,
                     Stars = model.Stars,
                     DateRead = model.DateRead,
                 };
@@ -42,6 +43,7 @@ namespace BookMarked.Services
                 {
                     RatingId = e.RatingId,
                     VolumeId =e.VolumeId,
+                    VolumeTitle=e.VolumeTitle,
                     Stars = e.Stars,
                     DateRead = e.DateRead
                 }).ToList();
@@ -56,6 +58,7 @@ namespace BookMarked.Services
             {
                 RatingId = rating.RatingId,
                 VolumeId=rating.VolumeId,
+                VolumeTitle=rating.VolumeTitle,
                 DateRead = rating.DateRead,
                 Stars=rating.Stars
 

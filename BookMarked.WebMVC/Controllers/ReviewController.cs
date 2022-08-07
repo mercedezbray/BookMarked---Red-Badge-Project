@@ -15,11 +15,12 @@ namespace BookMarked.WebMVC.Controllers
         }
 
         [HttpGet]
-        public IActionResult Create([FromQuery] string volumeId, int ratingId)
+        public IActionResult Create([FromQuery] string volumeId, int ratingId, string volumeTitle)
         {
             ViewData["OwnerRef"] = UserUtility.GetUserId(User);
             ViewData["VolumeRef"] = volumeId;
             ViewData["RatingRef"] = ratingId;
+            ViewData["VolumeTitleRef"] = volumeTitle;
 
             return View();
         }

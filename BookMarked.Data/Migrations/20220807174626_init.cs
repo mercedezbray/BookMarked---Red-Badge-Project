@@ -56,6 +56,7 @@ namespace BookMarked.Data.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     OwnerId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     VolumeId = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    VolumeTitle = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Stars = table.Column<int>(type: "int", nullable: false),
                     DateRead = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
@@ -178,6 +179,7 @@ namespace BookMarked.Data.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     OwnerId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     VolumeId = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    VolumeTitle = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     RatingId = table.Column<int>(type: "int", nullable: false),
                     ReviewContent = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },

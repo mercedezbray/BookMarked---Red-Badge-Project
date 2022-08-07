@@ -20,6 +20,9 @@
                 @Html.DisplayNameFor(model => model.VolumeId)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.VolumeTitle)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.Stars)
             </th>
             <th>
@@ -38,6 +41,9 @@
                 @Html.DisplayFor(modelItem => item.VolumeId)
             </td>
             <td>
+                @Html.DisplayFor(modelItem => item.VolumeTitle)
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => item.Stars)
             </td>
             <td>
@@ -51,6 +57,7 @@
                     <button class="btn-dark">Review this book!</button>
                     <input type="hidden" name="VolumeId" value=@item.VolumeId />
                     <input type="hidden" name="RatingId" value=@item.RatingId />
+                    <input type="hidden" name="volumeTitle" value=@item.VolumeTitle >
                 </form>
             </td>
         </tr>

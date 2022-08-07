@@ -14,6 +14,8 @@ namespace BookMarked.Models.Review
         [Required]
         public string VolumeId { get; set; }
         [Required]
+        public string VolumeTitle { get; set; }
+        [Required]
         public int RatingId { get; set; }
         [Required(ErrorMessage = "Must enter text for a review")]
         [Display(Name = "Review")]

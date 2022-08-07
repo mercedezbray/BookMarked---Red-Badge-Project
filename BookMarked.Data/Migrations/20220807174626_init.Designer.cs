@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BookMarked.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220720185618_init")]
+    [Migration("20220807174626_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -70,6 +70,10 @@ namespace BookMarked.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("VolumeTitle")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("RatingId");
 
                     b.ToTable("Ratings");
@@ -94,6 +98,10 @@ namespace BookMarked.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("VolumeId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("VolumeTitle")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -308,13 +316,11 @@ namespace BookMarked.Data.Migrations
 
             modelBuilder.Entity("BookMarked.Data.Comment", b =>
                 {
-                    b.HasOne("BookMarked.Data.Review", "Review")
+                    b.HasOne("BookMarked.Data.Review", null)
                         .WithMany("Comments")
                         .HasForeignKey("ReviewId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Review");
                 });
 
             modelBuilder.Entity("BookMarked.Data.Review", b =>

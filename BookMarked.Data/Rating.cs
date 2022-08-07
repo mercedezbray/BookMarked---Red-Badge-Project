@@ -16,6 +16,8 @@ namespace BookMarked.Data
         [Required]
         public string VolumeId { get; set; }
         [Required]
+        public string VolumeTitle { get; set; }
+        [Required]
         public int Stars { get; set; }
         [Required]
         public DateTime DateRead { get; set; }
