@@ -17,9 +17,6 @@
                 @Html.DisplayNameFor(model => model.ReviewId)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.OwnerId)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.VolumeId)
             </th>
             <th>
@@ -38,9 +35,6 @@
                 @Html.DisplayFor(modelItem => item.ReviewId)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.OwnerId)
-            </td>
-            <td>
                 @Html.DisplayFor(modelItem => item.VolumeId)
             </td>
             <td>
@@ -50,9 +44,13 @@
                 @Html.DisplayFor(modelItem => item.ReviewContent)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                @Html.ActionLink("Edit", "Edit", new { id=item.ReviewId }) |
+                @Html.ActionLink("Details", "Details", new { id=item.ReviewId }) |
+                @Html.ActionLink("Delete", "Delete", new { id=item.ReviewId })
+                <form method="get" asp-controller="Comment" asp-action="Create">
+                    <button class="btn-dark">Leave a Comment!</button>
+                    <input type="hidden" name="reviewId" value=@item.ReviewId />
+                </form>
             </td>
         </tr>
 }

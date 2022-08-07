@@ -15,10 +15,11 @@ namespace BookMarked.WebMVC.Controllers
         }
 
         [HttpGet]
-        public IActionResult Create([FromQuery] string volumeId)
+        public IActionResult Create([FromQuery] string volumeId, int ratingId)
         {
             ViewData["OwnerRef"] = UserUtility.GetUserId(User);
             ViewData["VolumeRef"] = volumeId;
+            ViewData["RatingRef"] = ratingId;
 
             return View();
         }
@@ -27,7 +28,7 @@ namespace BookMarked.WebMVC.Controllers
         {
             if (!User.Identity.IsAuthenticated) return Unauthorized(); //Runs SetUserIdInService method and check validity
 
-            var reviews = _reviewService.GetReviews(); //variable 'ratings'  
+            var reviews = _reviewService.GetReviews(UserUtility.GetUserId(User)); //variable 'ratings'  
             return View(reviews.ToList());
         }
 
@@ -69,6 +70,7 @@ namespace BookMarked.WebMVC.Controllers
             var detail = _reviewService.GetReviewById(id);
             var model = new ReviewEdit()
             {
+                ReviewId = detail.ReviewId,
                 ReviewContent = detail.ReviewContent
             };
             return View(model);

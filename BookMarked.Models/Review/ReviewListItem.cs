@@ -12,9 +12,6 @@ namespace BookMarked.Models.Review
         [Key]
         public int ReviewId { get; set; }
         [Required]
-        public Guid OwnerId { get; set; }
-
-        [Required]
         public string VolumeId { get; set; }
         [Required]
         public int RatingId { get; set; }

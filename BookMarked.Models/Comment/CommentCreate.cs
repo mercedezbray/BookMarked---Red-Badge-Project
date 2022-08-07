@@ -9,6 +9,7 @@ namespace BookMarked.Models.Comment
 {
     public class CommentCreate
     {
+        [Key]
         public int CommentId { get; set; }
         [Required]
         public Guid OwnerId { get; set; }

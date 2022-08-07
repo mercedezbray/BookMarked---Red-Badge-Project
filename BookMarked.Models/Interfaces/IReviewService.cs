@@ -10,7 +10,7 @@ namespace BookMarked.Models.Interfaces
     public interface IReviewService
     {
         bool CreateReview(ReviewCreate model);
-        IList<ReviewListItem> GetReviews();
+        IList<ReviewListItem> GetReviews(Guid OwnerId);
         void SetUserId(Guid userId);
         ReviewDetail GetReviewById(int Reviewid);
         bool UpdateReview(ReviewEdit model);

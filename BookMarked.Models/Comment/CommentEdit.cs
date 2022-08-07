@@ -10,9 +10,6 @@ namespace BookMarked.Models.Comment
     public class CommentEdit
     {
         public int CommentId { get; set; }
-        [Required]
-        public Guid OwnerId { get; set; }
-        public int ReviewId { get; set; }
         [Required(ErrorMessage = "Must enter text for comment")]
         [StringLength(500)]
         [Display(Name = "Comment")]

@@ -10,7 +10,7 @@ namespace BookMarked.Models.Interfaces
     public interface ICommentService
     {
         bool CreateComment(CommentCreate model);
-        IList<CommentListItem> GetComments();
+        IList<CommentListItem> GetComments(Guid OwnerId);
         void SetUserId(Guid userId);
         CommentDetail GetCommentById(int Commentid);
         bool UpdateComment(CommentEdit model);

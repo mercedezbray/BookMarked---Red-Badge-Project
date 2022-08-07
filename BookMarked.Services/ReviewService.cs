@@ -23,23 +23,23 @@ namespace BookMarked.Services
             {
                 var entity = new Review
                 {
-                    OwnerId = _userId,
+                    OwnerId = model.OwnerId,
                     VolumeId = model.VolumeId,
+                    RatingId = model.RatingId,
                     ReviewContent = model.ReviewContent,
                 };
                 _context.Reviews.Add(entity);
                 return _context.SaveChanges() == 1;
             }
 
-            public IList<ReviewListItem> GetReviews()
+            public IList<ReviewListItem> GetReviews(Guid OwnerId)
             {
                 var reviews = _context.Reviews
-                .Where(e => e.OwnerId == _userId)
+                .Where(e => e.OwnerId == OwnerId)
                 .Select(e =>
                     new ReviewListItem()
                     {
                         ReviewId = e.ReviewId,
-                        OwnerId = _userId,
                         VolumeId=e.VolumeId,
                         RatingId = e.RatingId,
                         ReviewContent=e.ReviewContent,
@@ -49,23 +49,23 @@ namespace BookMarked.Services
 
             public ReviewDetail GetReviewById(int Reviewid)
             {
-                var rating = _context.Reviews
-                    .Single(e => e.RatingId == Reviewid && e.OwnerId == _userId);
+                var review = _context.Reviews
+                    .Single(e => e.ReviewId == Reviewid);
                 return new ReviewDetail()
                 {
-                    RatingId = rating.RatingId,
-                    OwnerId= _userId,
-                    ReviewContent = rating.ReviewContent,
-                    VolumeId = rating.VolumeId,
-                    ReviewId = rating.ReviewId,
+                    RatingId = review.RatingId,
+                    OwnerId= review.OwnerId,
+                    ReviewContent = review.ReviewContent,
+                    VolumeId = review.VolumeId,
+                    ReviewId = review.ReviewId,
                 };
             }
 
             public bool UpdateReview(ReviewEdit model)
             {
-                var review = _context.Reviews
-                    .Single(e => e.ReviewId == model.ReviewId && e.OwnerId == _userId);
-
+            var review = _context.Reviews
+                .Single(e => e.ReviewId == model.ReviewId);
+            review.ReviewContent = model.ReviewContent;
 
                 return _context.SaveChanges() == 1;
             }
@@ -73,7 +73,7 @@ namespace BookMarked.Services
             public bool DeleteReview(int reviewId)
             {
                 var entity = _context.Reviews
-                    .SingleOrDefault(e => e.ReviewId == reviewId && e.OwnerId == _userId);
+                    .SingleOrDefault(e => e.ReviewId == reviewId);
 
                 _context.Reviews.Remove(entity);
 

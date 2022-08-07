@@ -55,7 +55,8 @@
 
         <form method="get" asp-controller="Rating" asp-action="Create">
                 <button class="btn-dark">Rate this book!</button>
-                <input type="hidden" name="volumeId" value=@volume.Id/>
+                <input type="hidden" name="volumeId" value=@volume.Id />
+                <input type="hidden" name="volumeId" value=@volume.VolumeInfo.Title />
         </form>
 
         <hr />

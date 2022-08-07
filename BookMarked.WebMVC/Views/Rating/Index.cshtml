@@ -46,7 +46,12 @@
             <td>
                 @Html.ActionLink("Edit", "Edit", new { id=item.RatingId }) |
                 @Html.ActionLink("Details", "Details", new { id=item.RatingId }) |
-                @Html.ActionLink("Delete", "Delete", new { id=item.RatingId })
+                @Html.ActionLink("Delete", "Delete", new { id=item.RatingId }) |
+                <form method="get" asp-controller="Review" asp-action="Create">
+                    <button class="btn-dark">Review this book!</button>
+                    <input type="hidden" name="VolumeId" value=@item.VolumeId />
+                    <input type="hidden" name="RatingId" value=@item.RatingId />
+                </form>
             </td>
         </tr>
 }

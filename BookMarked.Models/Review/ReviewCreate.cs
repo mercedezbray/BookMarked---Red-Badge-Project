@@ -9,8 +9,6 @@ namespace BookMarked.Models.Review
 {
     public class ReviewCreate
     {
-        [Key]
-        public int ReviewId { get; set; }
         [Required]
         public Guid OwnerId { get; set; }
 

@@ -19,15 +19,16 @@ namespace BookMarked.WebMVC.Controllers
         {
             if (!User.Identity.IsAuthenticated) return Unauthorized(); //Runs SetUserIdInService method and check validity
 
-            var comments = _commentService.GetComments(); //variable 'ratings'  
+            var comments = _commentService.GetComments(UserUtility.GetUserId(User)); //variable 'ratings'  
             return View(comments.ToList());
         }
 
         [HttpGet]
-        public IActionResult Create([FromQuery] string volumeId)
+        public IActionResult Create([FromQuery] string volumeId, int ReviewId)
         {
             ViewData["OwnerRef"] = UserUtility.GetUserId(User);
             ViewData["VolumeRef"] = volumeId;
+            ViewData["ReviewRef"] = ReviewId;
 
             return View();
         }
@@ -81,7 +82,7 @@ namespace BookMarked.WebMVC.Controllers
         {
             if (!ModelState.IsValid) return View(model);
 
-            if (model.ReviewId != id)
+            if (model.CommentId != id)
             {
                 ModelState.AddModelError("", "Id Mismatch");
                 return View(model);

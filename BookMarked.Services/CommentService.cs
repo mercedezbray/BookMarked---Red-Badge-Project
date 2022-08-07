@@ -24,7 +24,6 @@ namespace BookMarked.Services
             var entity = new Comment
             {
                 CommentContent = model.CommentContent,
-                CommentId = model.CommentId,
                 OwnerId = model.OwnerId,
                 ReviewId = model.ReviewId
             };
@@ -32,10 +31,10 @@ namespace BookMarked.Services
             return _context.SaveChanges() == 1;
         }
 
-        public IList<CommentListItem> GetComments()
+        public IList<CommentListItem> GetComments(Guid OwnerId)
         {
             var comment = _context.Comments
-            .Where(e => e.OwnerId == _userId)
+            .Where(e => e.OwnerId == OwnerId)
             .Select(e =>
                 new CommentListItem()
                 {
@@ -50,7 +49,7 @@ namespace BookMarked.Services
         public CommentDetail GetCommentById(int Commentid)
         {
             var comment = _context.Comments
-                .Single(e => e.CommentId == Commentid && e.OwnerId == _userId);
+                .Single(e => e.CommentId == Commentid);
             return new CommentDetail()
             {
                 CommentId=comment.CommentId,
@@ -63,8 +62,8 @@ namespace BookMarked.Services
         public bool UpdateComment(CommentEdit model)
         {
             var comment = _context.Comments
-                .Single(e => e.CommentId == model.CommentId && e.OwnerId == _userId);
-
+                .Single(e => e.CommentId == model.CommentId);
+            comment.CommentContent = model.CommentContent;
 
             return _context.SaveChanges() == 1;
         }
@@ -72,7 +71,7 @@ namespace BookMarked.Services
         public bool DeleteComment(int commentId)
         {
             var entity = _context.Comments
-                .SingleOrDefault(e => e.CommentId == commentId && e.OwnerId == _userId);
+                .SingleOrDefault(e => e.CommentId == commentId);
 
             _context.Comments.Remove(entity);
 
