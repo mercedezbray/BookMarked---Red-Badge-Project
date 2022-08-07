@@ -1,8 +1,10 @@
 ﻿@model BookMarked.Models.Review.ReviewDetail
-
+@using BookMarked.Models.Comment;
 @{
     ViewData["Title"] = "Details";
     Layout = "~/Views/Shared/_Layout.cshtml";
+
+    var listOfComments = (IList<CommentListItem>) ViewData["ListOfComments"];
 }
 
 <h1>Details</h1>
@@ -52,7 +54,25 @@
 
 <a asp-controller="Comment"
    asp-action="Create">Leave a Comment on this Review!</a>
+
+@{
+    if (listOfComments.Count == 0)
+    {
+        <h2>No Comments on this Review</h2>
+    }
+    else
+    {
+        <h2>Comments on this Review</h2>
+        foreach (var comment in listOfComments)
+        {
+            <p>Comment: @comment.CommentContent</p>
+            <p>Owner Id: @comment.OwnerId</p>
+        }
+    }
+
+}
+
 <div>
-    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ReviewId }) |
     <a asp-action="Index">Back to List</a>
 </div>

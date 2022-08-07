@@ -5,11 +5,8 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Index</h1>
+<h1>Review Index</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
 <table class="table">
     <thead>
         <tr>
@@ -53,6 +50,7 @@
                 @Html.ActionLink("Edit", "Edit", new { id=item.ReviewId }) |
                 @Html.ActionLink("Details", "Details", new { id=item.ReviewId }) |
                 @Html.ActionLink("Delete", "Delete", new { id=item.ReviewId })
+
                 <form method="get" asp-controller="Comment" asp-action="Create">
                     <button class="btn-dark">Leave a Comment!</button>
                     <input type="hidden" name="reviewId" value=@item.ReviewId />

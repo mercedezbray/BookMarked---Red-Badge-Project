@@ -8,11 +8,14 @@ namespace BookMarked.WebMVC.Controllers
     public class ReviewController : Controller
     {
         private readonly IReviewService _reviewService;
+        private readonly ICommentService _commentService;
 
-        public ReviewController(IReviewService reviewService)
+        public ReviewController(IReviewService reviewService, ICommentService commentService)
         {
             _reviewService = reviewService;
+            _commentService = commentService;
         }
+
 
         [HttpGet]
         public IActionResult Create([FromQuery] string volumeId, int ratingId, string volumeTitle)
@@ -55,11 +58,13 @@ namespace BookMarked.WebMVC.Controllers
             return View(model);
         }
 
-        public ActionResult Details(int id)
+        public ActionResult Details([FromRoute] int id)
         {
             if (!User.Identity.IsAuthenticated) return Unauthorized();
 
             var model = _reviewService.GetReviewById(id);
+            var listofcomments = _commentService.GetCommentsbyReviewId(id);
+            ViewData["ListOfComments"] = listofcomments;
 
             return View(model);
         }

@@ -49,10 +49,10 @@ namespace BookMarked.Services
                 return reviews;
             }
 
-            public ReviewDetail GetReviewById(int Reviewid)
+            public ReviewDetail GetReviewById(int ReviewId)
             {
                 var review = _context.Reviews
-                    .Single(e => e.ReviewId == Reviewid);
+                    .Single(e => e.ReviewId == ReviewId);
                 return new ReviewDetail()
                 {
                     RatingId = review.RatingId,
@@ -63,6 +63,7 @@ namespace BookMarked.Services
                     ReviewId = review.ReviewId,
                 };
             }
+
 
             public bool UpdateReview(ReviewEdit model)
             {

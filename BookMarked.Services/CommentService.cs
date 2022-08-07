@@ -59,7 +59,22 @@ namespace BookMarked.Services
             };
         }
 
-        public bool UpdateComment(CommentEdit model)
+        public IList<CommentListItem> GetCommentsbyReviewId(int ReviewId)
+        {
+            var comment = _context.Comments
+            .Where(e => e.ReviewId == ReviewId)
+            .Select(e =>
+                new CommentListItem()
+                {
+                    CommentId = e.CommentId,
+                    OwnerId = e.OwnerId,
+                    ReviewId = e.ReviewId,
+                    CommentContent = e.CommentContent,
+                }).ToList();
+            return comment;
+        }
+
+            public bool UpdateComment(CommentEdit model)
         {
             var comment = _context.Comments
                 .Single(e => e.CommentId == model.CommentId);

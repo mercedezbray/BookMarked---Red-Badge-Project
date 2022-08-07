@@ -11,6 +11,7 @@ namespace BookMarked.Models.Interfaces
     {
         bool CreateComment(CommentCreate model);
         IList<CommentListItem> GetComments(Guid OwnerId);
+        IList<CommentListItem> GetCommentsbyReviewId(int ReviewId);
         void SetUserId(Guid userId);
         CommentDetail GetCommentById(int Commentid);
         bool UpdateComment(CommentEdit model);

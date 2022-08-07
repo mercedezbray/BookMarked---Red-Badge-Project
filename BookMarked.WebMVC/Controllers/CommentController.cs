@@ -71,6 +71,7 @@ namespace BookMarked.WebMVC.Controllers
             var detail = _commentService.GetCommentById(id);
             var model = new CommentEdit()
             {
+                CommentId = id,
                 CommentContent = detail.CommentContent
             };
             return View(model);
