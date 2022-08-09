@@ -2,6 +2,7 @@
 using BookMarked.Models.Rating;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
+using Microsoft.AspNetCore.WebUtilities;
 
 namespace BookMarked.WebMVC.Controllers
 {
@@ -15,11 +16,11 @@ namespace BookMarked.WebMVC.Controllers
         }
 
         [HttpGet]
-        public IActionResult Create([FromQuery] string volumeId, string volumeTitle)
+        public IActionResult Create([FromQuery] string volumeId, [FromQuery] string volumeTitle)
         {
             ViewData["OwnerRef"] = UserUtility.GetUserId(User);
             ViewData["VolumeRef"] = volumeId;
-            ViewData["VolumeTitleRef"] = volumeTitle;
+            ViewData["VolumeTitleRef"] = volumeTitle.Replace("+", " ");
 
             return View();
         }
@@ -27,9 +28,9 @@ namespace BookMarked.WebMVC.Controllers
 
         public IActionResult Index()
         {
-            if (!User.Identity.IsAuthenticated) return Unauthorized();
+            //if (!User.Identity.IsAuthenticated) return Unauthorized();
 
-            var ratings = _ratingService.GetRatings(UserUtility.GetUserId(User)); //variable 'ratings'  
+            var ratings = _ratingService.GetRatings(); //variable 'ratings'  
             return View(ratings.ToList());
         }
 

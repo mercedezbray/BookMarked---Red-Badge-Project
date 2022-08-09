@@ -10,6 +10,7 @@ namespace BookMarked.Models.Rating
     public class RatingListItem
     {
         public int RatingId { get; set; }
+        public Guid OwnerId { get; set; }
         public string VolumeId { get; set; }
         [Required]
         public string VolumeTitle { get; set; }

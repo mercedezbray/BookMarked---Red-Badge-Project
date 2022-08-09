@@ -23,14 +23,14 @@ namespace BookMarked.WebMVC.Controllers
             ViewData["OwnerRef"] = UserUtility.GetUserId(User);
             ViewData["VolumeRef"] = volumeId;
             ViewData["RatingRef"] = ratingId;
-            ViewData["VolumeTitleRef"] = volumeTitle;
+            ViewData["VolumeTitleRef"] = volumeTitle.Replace("+", " ");
 
             return View();
         }
 
         public IActionResult Index()
         {
-            if (!User.Identity.IsAuthenticated) return Unauthorized(); //Runs SetUserIdInService method and check validity
+            //if (!User.Identity.IsAuthenticated) return Unauthorized(); //Runs SetUserIdInService method and check validity
 
             var reviews = _reviewService.GetReviews(UserUtility.GetUserId(User)); //variable 'ratings'  
             return View(reviews.ToList());

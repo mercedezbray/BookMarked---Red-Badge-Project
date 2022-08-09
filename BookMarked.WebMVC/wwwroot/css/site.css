@@ -16,3 +16,17 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+h1 {
+    text-align: center;
+}
+
+body {
+    background-image: url("https://foodtank.com/wp-content/uploads/2021/07/alfons-morales-YLSwjSy7stw-unsplash.jpg");
+    background-color: #cccccc;
+}
+
+div {
+    border: double;
+    background-color: antiquewhite;
+}

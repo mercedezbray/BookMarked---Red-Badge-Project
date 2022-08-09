@@ -34,14 +34,15 @@ namespace BookMarked.Services
             return result == 1;
         }
 
-        public IList<RatingListItem> GetRatings( Guid OwnerId)
+        public IList<RatingListItem> GetRatings()
         {
             var ratings = _context.Ratings
-            .Where(e => e.OwnerId == OwnerId)
+            
             .Select(e =>
                 new RatingListItem()
                 {
                     RatingId = e.RatingId,
+                    OwnerId = e.OwnerId,
                     VolumeId =e.VolumeId,
                     VolumeTitle=e.VolumeTitle,
                     Stars = e.Stars,

@@ -54,7 +54,7 @@
                     <button class="btn-dark">Review this book!</button>
                     <input type="hidden" name="VolumeId" value=@item.VolumeId />
                     <input type="hidden" name="RatingId" value=@item.RatingId />
-                    <input type="hidden" name="volumeTitle" value=@item.VolumeTitle >
+                    <input type="hidden" name="volumeTitle" value=@item.VolumeTitle.Replace(" ", "+" )>
                 </form>
             </td>
         </tr>

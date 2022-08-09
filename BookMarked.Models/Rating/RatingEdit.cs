@@ -10,6 +10,7 @@ namespace BookMarked.Models.Rating
     public class RatingEdit
     {
         public int RatingId { get; set; }
+        public Guid OwnerId { get; set; }
         public int Stars { get; set; }
         [Display(Name = "Date Read")]
         public DateTime DateRead { get; set; }

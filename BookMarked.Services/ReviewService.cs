@@ -36,7 +36,6 @@ namespace BookMarked.Services
             public IList<ReviewListItem> GetReviews(Guid OwnerId)
             {
                 var reviews = _context.Reviews
-                .Where(e => e.OwnerId == OwnerId)
                 .Select(e =>
                     new ReviewListItem()
                     {
