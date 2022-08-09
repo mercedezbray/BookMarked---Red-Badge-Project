@@ -5,22 +5,21 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Create</h1>
+<h1>Create a Comment</h1>
 
-<h4>CommentCreate</h4>
 <hr />
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-4" style="padding-bottom:20px">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
+            <div class="form-group" style="visibility:hidden">
                 <label asp-for="OwnerId" class="control-label"></label>
-                <input asp-for="OwnerId" class="form-control" value="@ViewData["OwnerRef"]"/>
+                <input type="hidden" asp-for="OwnerId" class="form-control" value="@ViewData["OwnerRef"]"/>
                 <span asp-validation-for="OwnerId" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="form-group" style="visibility:hidden">
                 <label asp-for="ReviewId" class="control-label"></label>
-                <input asp-for="ReviewId" class="form-control" />
+                <input type="hidden" asp-for="ReviewId" class="form-control" />
                 <span asp-validation-for="ReviewId" class="text-danger"></span>
             </div>
             <div class="form-group">

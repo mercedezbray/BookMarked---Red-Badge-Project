@@ -14,7 +14,9 @@ html {
 }
 
 body {
-  margin-bottom: 60px;
+    margin-bottom: 60px;
+    font-family: Courier New, Courier, monospace;
+    text-align: center;
 }
 
 h1 {
@@ -27,6 +29,7 @@ body {
 }
 
 div {
-    border: double;
     background-color: antiquewhite;
+    text-align: center;
+    border: double;
 }

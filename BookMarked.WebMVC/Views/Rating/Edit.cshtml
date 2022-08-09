@@ -5,17 +5,16 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Edit</h1>
+<h1>Edit a Rating</h1>
 
-<h4>RatingEdit</h4>
 <hr />
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-4" style="padding-bottom:20px" >
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
+            <div class="form-group" style="visibility:hidden" >
                 <label asp-for="RatingId" class="control-label"></label>
-                <input asp-for="RatingId" class="form-control" />
+                <input type="hidden" asp-for="RatingId" class="form-control" />
                 <span asp-validation-for="RatingId" class="text-danger"></span>
             </div>
             <div class="form-group">
